@@ -8,7 +8,7 @@
     <artifactId>com.my.ad</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>om.my.ad</name>
+    <name>com.my.ad</name>
     <description>Project</description>
     <parent>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -17,7 +17,7 @@
     </parent>
 
     <properties>
-
+        <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
     </properties>
 
     <dependencies>
@@ -34,12 +34,19 @@
             <version>2.4.2</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-dependencies</artifactId>
-            <version>Finchley.SR1</version>
-        </dependency>
+
     </dependencies>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>
