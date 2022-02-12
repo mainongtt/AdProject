@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: ad-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          lower-case-service-id: true
+          enabled: true
+      routes:
+        - id: demo
+          uri: https://localhost:9090
+          predicates:
+            - Path=/ad-sponsor/**
+          filters:
+            - name: My
+server:
+  port: 9090
+eureka:
+  instance:
+    instance-id: cloud-gateway #显示此名字(默认是当前项目http://localhost:7070)
+    prefer-ip-address: true #访问路径可以显示ip地址
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8001/eureka/ #注册中心地址
+
