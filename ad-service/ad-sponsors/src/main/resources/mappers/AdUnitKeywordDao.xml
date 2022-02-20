@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jd.dao.unit_condition.AdUnitKeywordDao">
+    <resultMap id="resultMap" type="com.jd.entity.unit_condition.AdUnitKeyword">
+        <id property="id" column="id"/>
+        <result property="unitId"   column="unit_id" />
+        <result property="keyword"   column="keyword" />
+    </resultMap>
+    <sql id="tableSql">
+        ad_unit_keyword
+    </sql>
+    <sql id="updateSetSql">
+        <set>
+            <choose><when test="id!=null">`id`=#{id}</when><otherwise>`id`=NULL</otherwise></choose>,
+            <choose><when test="unitId!=null">`unit_id`=#{unitId}</when><otherwise>`unit_id`=NULL</otherwise></choose>,
+            <choose><when test="keyword!=null">`keyword`=#{keyword}</when><otherwise>`keyword`=NULL</otherwise></choose>
+        </set>
+    </sql>
+
+    <select id="findAllUnitKeyword" resultMap="resultMap" parameterType="com.jd.entity.unit_condition.AdUnitKeyword">
+        SELECT
+        *
+        FROM
+        <include refid="tableSql"></include>
+        where
+           1 = 1
+        <if test="id != null">
+            and  id = #{id}
+        </if>
+
+    </select>
+    <update id="updateUnitKeyword"  parameterType="com.jd.entity.unit_condition.AdUnitKeyword">
+        update
+        <include refid="tableSql"></include>
+        <include refid="updateSetSql"></include>
+        where 1 = 1 and
+        and id = #{id}
+    </update>
+
+    <insert id="saveAll" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        <include refid="tableSql"></include>
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.unitId},#{item.keyword})
+        </foreach>
+    </insert>
+
+</mapper>

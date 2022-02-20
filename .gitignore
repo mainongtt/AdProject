@@ -1,2 +1,4 @@
 /com.my.ad.iml
 /.idea/
+*.class
+*.iml

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jd.dao.AdUserDao">
+    <resultMap id="resultMap" type="com.jd.entity.AdUser">
+        <id property="id" column="id"/>
+        <result property="userName"   column="username" />
+        <result property="token"   column="token" />
+        <result property="userStatus"   column="user_status" />
+        <result property="createTime"   column="create_time" />
+        <result property="updateTime"   column="update_time" />
+    </resultMap>
+    <sql id="tableSql">
+        ad_user
+    </sql>
+    <sql id="updateSetSql">
+        <set>
+            <choose><when test="id!=null">`id`=#{id}</when><otherwise>`id`=NULL</otherwise></choose>,
+            <choose><when test="userName!=null">`username`=#{userName}</when><otherwise>`username`=NULL</otherwise></choose>,
+            <choose><when test="token!=null">`token`=#{token}</when><otherwise>`token`=NULL</otherwise></choose>,
+            <choose><when test="userStatus!=null">`user_status`=#{userStatus}</when><otherwise>`user_status`=NULL</otherwise></choose>,
+            <choose><when test="createTime!=null">`create_time`=#{createTime}</when><otherwise>`create_time`=NULL</otherwise></choose>,
+            <choose><when test="updateTime!=null">`update_time`=#{updateTime}</when><otherwise>`update_time`=NULL</otherwise></choose>
+        </set>
+    </sql>
+
+    <select id="findAllUser" resultMap="resultMap" parameterType="com.jd.entity.AdUser">
+        SELECT
+        *
+        FROM
+        <include refid="tableSql"></include>
+        where
+           1 = 1
+        <if test="id != null">
+            and  id = #{id}
+        </if>
+
+    </select>
+    <update id="updateUser"  parameterType="com.jd.entity.AdUser">
+        update
+        <include refid="tableSql"></include>
+        <include refid="updateSetSql"></include>
+--         where is_delete = 0
+        and id = #{id}
+    </update>
+
+    <insert id="save" parameterType="com.jd.entity.AdUser">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into
+        <include refid="tableSql"></include>
+        (username,token,user_status,create_time,update_time)
+        values (#{userName},#{token},#{userStatus},#{createTime},#{updateTime})
+    </insert>
+</mapper>

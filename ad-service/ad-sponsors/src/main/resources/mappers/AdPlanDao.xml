@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jd.dao.AdPlanDao">
+    <resultMap id="resultMap" type="com.jd.entity.AdPlan">
+        <id property="id" column="id"/>
+        <result property="userId"   column="user_id" />
+        <result property="planName"   column="plan_name" />
+        <result property="planStatus"   column="plan_status" />
+        <result property="startDate"   column="start_date" />
+        <result property="endDate"   column="end_date" />
+        <result property="createTime"   column="create_time" />
+        <result property="updateTime"   column="update_time" />
+    </resultMap>
+    <sql id="tableSql">
+        ad_plan
+    </sql>
+    <sql id="updateSetSql">
+        <set>
+           <choose><when test="id!=null">`id`=#{id}</when><otherwise>`id`=NULL</otherwise></choose>,
+            <choose><when test="userId!=null">`user_id`=#{userId}</when><otherwise>`user_id`=NULL</otherwise></choose>,
+            <choose><when test="planName!=null">`plan_name`=#{planName}</when><otherwise>`plan_name`=NULL</otherwise></choose>,
+            <choose><when test="planStatus!=null">`plan_status`=#{planStatus}</when><otherwise>`plan_status`=NULL</otherwise></choose>,
+            <choose><when test="startDate!=null">`start_date`=#{startDate}</when><otherwise>`start_date`=NULL</otherwise></choose>,
+            <choose><when test="endDate!=null">`end_date`=#{endDate}</when><otherwise>`end_date`=NULL</otherwise></choose>,
+            <choose><when test="createTime!=null">`create_time`=#{createTime}</when><otherwise>`create_time`=NULL</otherwise></choose>,
+            <choose><when test="updateTime!=null">`update_time`=#{updateTime}</when><otherwise>`update_time`=NULL</otherwise></choose>
+        </set>
+    </sql>
+
+    <select id="findAllPlan" resultMap="resultMap" parameterType="com.jd.entity.AdPlan">
+        SELECT
+        *
+        FROM
+        <include refid="tableSql"></include>
+        where
+           1 = 1
+        <if test="id != null">
+            and  id = #{id}
+        </if>
+
+    </select>
+    <update id="updatePlan"  parameterType="com.jd.entity.AdPlan">
+        update
+        <include refid="tableSql"></include>
+        <include refid="updateSetSql"></include>
+        where
+        1 = 1
+        <if test="id != null">
+            and  id = #{id}
+        </if>
+    </update>
+
+    <insert id="save" parameterType="com.jd.entity.AdPlan">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into
+        <include refid="tableSql"></include>
+        (user_id,plan_name,plan_status,start_date,end_date,create_time,update_time)
+        values (#{userId},#{planName},#{planStatus},#{startDate},#{endDate},#{createTime},#{updateTime})
+    </insert>
+</mapper>

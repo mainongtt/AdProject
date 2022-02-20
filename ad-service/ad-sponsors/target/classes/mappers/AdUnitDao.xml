@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jd.dao.AdUnitDao">
+    <resultMap id="resultMap" type="com.jd.entity.AdUnit">
+        <id property="id" column="id"/>
+        <result property="planId"   column="plan_id" />
+        <result property="unitName"   column="unit_name" />
+        <result property="unitStatus"   column="unit_status" />
+        <result property="positionType"   column="position_type" />
+        <result property="budget"   column="budget" />
+        <result property="createTime"   column="create_time" />
+        <result property="updateTime"   column="update_time" />
+    </resultMap>
+    <sql id="tableSql">
+        ad_unit
+    </sql>
+    <sql id="updateSetSql">
+        <set>
+            <choose><when test="id!=null">`id`=#{id}</when><otherwise>`id`=NULL</otherwise></choose>,
+            <choose><when test="planId!=null">`plan_id`=#{planId}</when><otherwise>`plan_id`=NULL</otherwise></choose>,
+            <choose><when test="unitName!=null">`unit_name`=#{unitName}</when><otherwise>`unit_name`=NULL</otherwise></choose>,
+            <choose><when test="unitStatus!=null">`unit_status`=#{unitStatus}</when><otherwise>`unit_status`=NULL</otherwise></choose>,
+            <choose><when test="positionType!=null">`position_type`=#{positionType}</when><otherwise>`position_type`=NULL</otherwise></choose>,
+            <choose><when test="budget!=null">`budget`=#{budget}</when><otherwise>`budget`=NULL</otherwise></choose>,
+            <choose><when test="createTime!=null">`create_time`=#{createTime}</when><otherwise>`create_time`=NULL</otherwise></choose>,
+            <choose><when test="updateTime!=null">`update_time`=#{updateTime}</when><otherwise>`update_time`=NULL</otherwise></choose>
+        </set>
+    </sql>
+
+    <select id="findAllUnit" resultMap="resultMap" parameterType="com.jd.entity.AdUnit">
+        SELECT
+        *
+        FROM
+        <include refid="tableSql"></include>
+        where
+           1 = 1
+        <if test="id != null">
+            and  id = #{id}
+        </if>
+
+    </select>
+    <update id="updateUnit"  parameterType="com.jd.entity.AdUnit">
+        update
+        <include refid="tableSql"></include>
+        <include refid="updateSetSql"></include>
+        and id = #{id}
+    </update>
+</mapper>

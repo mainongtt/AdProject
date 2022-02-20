@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jd.dao.AdCreativeDao">
+    <resultMap id="resultMap" type="com.jd.entity.AdCreative">
+        <id property="id" column="id"/>
+        <result property="name"   column="name" />
+        <result property="type"   column="type" />
+        <result property="materialType"   column="material_type" />
+        <result property="height"   column="height" />
+        <result property="width"   column="width" />
+        <result property="size"   column="size" />
+        <result property="duration"   column="duration" />
+        <result property="auditStatus"   column="audit_status" />
+        <result property="userId"   column="user_id" />
+        <result property="url"   column="url" />
+        <result property="createTime"   column="create_time" />
+        <result property="updateTime"   column="update_time" />
+    </resultMap>
+    <sql id="tableSql">
+        ad_creative
+    </sql>
+    <sql id="updateSetSql">
+        <set>
+            <choose><when test="id!=null">`id`=#{id}</when><otherwise>`id`=NULL</otherwise></choose>,
+            <choose><when test="name!=null">`name`=#{name}</when><otherwise>`name`=NULL</otherwise></choose>,
+            <choose><when test="type!=null">`type`=#{type}</when><otherwise>`type`=NULL</otherwise></choose>,
+            <choose><when test="materialType!=null">`material_type`=#{materialType}</when><otherwise>`material_type`=NULL</otherwise></choose>,
+            <choose><when test="height!=null">`height`=#{height}</when><otherwise>`height`=NULL</otherwise></choose>,
+            <choose><when test="width!=null">`width`=#{width}</when><otherwise>`width`=NULL</otherwise></choose>,
+            <choose><when test="size!=null">`size`=#{size}</when><otherwise>`size`=NULL</otherwise></choose>,
+            <choose><when test="duration!=null">`duration`=#{duration}</when><otherwise>`duration`=NULL</otherwise></choose>,
+            <choose><when test="auditStatus!=null">`audit_status`=#{auditStatus}</when><otherwise>`audit_status`=NULL</otherwise></choose>,
+            <choose><when test="userId!=null">`user_id`=#{userId}</when><otherwise>`user_id`=NULL</otherwise></choose>,
+            <choose><when test="url!=null">`url`=#{url}</when><otherwise>`url`=NULL</otherwise></choose>,
+            <choose><when test="createTime!=null">`create_time`=#{createTime}</when><otherwise>`create_time`=NULL</otherwise></choose>,
+            <choose><when test="updateTime!=null">`update_time`=#{updateTime}</when><otherwise>`update_time`=NULL</otherwise></choose>
+        </set>
+    </sql>
+
+    <select id="findAllCreative" resultMap="resultMap" parameterType="com.jd.entity.AdCreative">
+        SELECT
+        *
+        FROM
+        <include refid="tableSql"></include>
+        where
+           1 = 1
+        <if test="id != null">
+            and  id = #{id}
+        </if>
+
+    </select>
+    <update id="updateCreative"  parameterType="com.jd.entity.AdCreative">
+        update
+        <include refid="tableSql"></include>
+        <include refid="updateSetSql"></include>
+        where 1 = 1
+        and id = #{id}
+    </update>
+    <insert id="save" parameterType="com.jd.entity.AdCreative">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into
+        <include refid="tableSql"></include>
+        (name,type,material_type,height,width,size,duration,audit_status,user_id,url,create_time,update_time)
+        values (#{name},#{type},#{materialType},#{height},#{width},#{size},#{duration},#{auditStatus},#{userId},#{url},#{createTime},#{updateTime})
+    </insert>
+</mapper>

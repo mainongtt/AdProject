@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jd.dao.unit_condition.AdUnitItDao">
+    <resultMap id="resultMap" type="com.jd.entity.unit_condition.AdUnitIt">
+        <id property="id" column="id"/>
+        <result property="unitId"   column="unit_id" />
+        <result property="itTag"   column="it_tag" />
+    </resultMap>
+    <sql id="tableSql">
+        ad_unit_it
+    </sql>
+    <sql id="updateSetSql">
+        <set>
+            <choose><when test="id!=null">`id`=#{id}</when><otherwise>`id`=NULL</otherwise></choose>,
+            <choose><when test="unitId!=null">`unit_id`=#{unitId}</when><otherwise>`unit_id`=NULL</otherwise></choose>,
+            <choose><when test="itTag!=null">`it_tag`=#{itTag}</when><otherwise>`it_tag`=NULL</otherwise></choose>
+        </set>
+    </sql>
+
+    <select id="findAllUnitIt" resultMap="resultMap" parameterType="com.jd.entity.unit_condition.AdUnitIt">
+        SELECT
+        *
+        FROM
+        <include refid="tableSql"></include>
+        where
+           1 = 1
+        <if test="id != null">
+            and  id = #{id}
+        </if>
+
+    </select>
+    <update id="updateUnitIt"  parameterType="com.jd.entity.unit_condition.AdUnitIt">
+        update
+        <include refid="tableSql"></include>
+        <include refid="updateSetSql"></include>
+        and id = #{id}
+    </update>
+</mapper>
