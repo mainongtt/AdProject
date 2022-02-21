@@ -11,4 +11,5 @@ public interface AdCreativeDao {
     List<AdCreative> findAllCreative(AdCreative creative);
     void updateCreative(AdCreative creative);
     void save(AdCreative creative);
+    List<AdCreative> findAllByIds(List<Long> ids);
 }

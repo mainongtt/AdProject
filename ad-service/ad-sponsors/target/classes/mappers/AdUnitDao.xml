@@ -33,16 +33,48 @@
         FROM
         <include refid="tableSql"></include>
         where
-           1 = 1
+        unit_status = 1
         <if test="id != null">
             and  id = #{id}
         </if>
+        <if test="planId != null">
+            and  plan_id=#{planId}
+        </if>
+        <if test="unitName != null">
+            and  unit_name=#{unitName}
+        </if>
 
     </select>
+
+    <select id="findAllByIds" resultMap="resultMap">
+        SELECT
+        *
+        From
+        <include refid="tableSql"></include>
+        where id in
+        <foreach item="ids" collection="list"
+                 open="(" separator="," close=")">
+        #{ids}
+        </foreach>
+        and unit_status = 1
+    </select>
+
     <update id="updateUnit"  parameterType="com.jd.entity.AdUnit">
         update
         <include refid="tableSql"></include>
         <include refid="updateSetSql"></include>
-        and id = #{id}
+        where unit_status = 1 = 1
+        <if test="id != null">
+            and  id = #{id}
+        </if>
     </update>
+    <insert id="save" parameterType="com.jd.entity.AdUnit">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            select LAST_INSERT_ID()
+        </selectKey>
+        insert into
+        <include refid="tableSql"></include>
+        (plan_id,unit_name,unit_status,position_type,budget,create_time,update_time)
+        values (#{planId},#{unitName},#{unitStatus},#{positionType},#{budget},#{createTime},#{updateTime})
+    </insert>
 </mapper>

@@ -17,7 +17,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://server1:8000/eureka/
+      defaultZone: http://server1:8001/eureka/
 logging:
   level:
     com.jd.dao: debug

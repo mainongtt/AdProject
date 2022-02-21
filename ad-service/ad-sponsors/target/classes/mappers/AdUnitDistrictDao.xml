@@ -37,4 +37,13 @@
         <include refid="updateSetSql"></include>
         and id = #{id}
     </update>
+
+    <insert id="saveAll" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        <include refid="tableSql"></include>
+        (unit_id,province,city) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.unitId},#{item.province},#{item.city})
+        </foreach>
+    </insert>
 </mapper>

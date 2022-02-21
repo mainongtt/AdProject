@@ -43,7 +43,7 @@
         FROM
         <include refid="tableSql"></include>
         where
-           1 = 1
+        audit_status = 1
         <if test="id != null">
             and  id = #{id}
         </if>
@@ -53,7 +53,7 @@
         update
         <include refid="tableSql"></include>
         <include refid="updateSetSql"></include>
-        where 1 = 1
+        where audit_status = 1
         and id = #{id}
     </update>
     <insert id="save" parameterType="com.jd.entity.AdCreative">
@@ -65,4 +65,17 @@
         (name,type,material_type,height,width,size,duration,audit_status,user_id,url,create_time,update_time)
         values (#{name},#{type},#{materialType},#{height},#{width},#{size},#{duration},#{auditStatus},#{userId},#{url},#{createTime},#{updateTime})
     </insert>
+
+    <select id="findAllByIds" resultMap="resultMap">
+        SELECT
+        *
+        From
+        <include refid="tableSql"></include>
+        where id in
+        <foreach item="ids" collection="list"
+                 open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+        and audit_status = 1
+    </select>
 </mapper>

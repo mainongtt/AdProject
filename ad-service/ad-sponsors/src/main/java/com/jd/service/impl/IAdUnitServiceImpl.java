@@ -1,6 +1,7 @@
 package com.jd.service.impl;
 
 import com.jd.constant.Constants;
+import com.jd.dao.AdCreativeDao;
 import com.jd.dao.AdPlanDao;
 import com.jd.dao.AdUnitDao;
 import com.jd.dao.unit_condition.AdUnitDistrictDao;
@@ -18,6 +19,7 @@ import com.jd.service.IAdUnitService;
 import com.jd.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
@@ -28,20 +30,23 @@ import java.util.stream.Collectors;
 @Service
 public class IAdUnitServiceImpl implements IAdUnitService {
 
-    @Autowired
+    @Autowired(required = false)
     private AdPlanDao adPlanDao;
-    @Autowired
+    @Autowired(required = false)
     private AdUnitDao adUnitDao;
-    @Autowired
+    @Autowired(required = false)
     private AdUnitKeywordDao adUnitKeywordDao;
-    @Autowired
+    @Autowired(required = false)
     private AdUnitDistrictDao adUnitDistrictDao;
-    @Autowired
+    @Autowired(required = false)
     private AdUnitItDao adUnitItDao;
-    @Autowired
+    @Autowired(required = false)
     private CreativeUnitDao creativeUnitDao;
+    @Autowired(required = false)
+    private AdCreativeDao adCreativeDao;
 
     @Override
+    @Transactional
     public AdUnitResponse createUnit(AdUnitRequest request) throws AdException {
         if(!request.createValidate()){
             throw new AdException(Constants.ErrorMsg.REQUEST_PARAM_ERROR);
@@ -62,6 +67,7 @@ public class IAdUnitServiceImpl implements IAdUnitService {
     }
 
     @Override
+    @Transactional
     public AdUnitKeywordResponse createUnitKeyword(AdUnitKeywordRequest request) throws AdException {
         List<Long> ids = request.getUnitKeywords().stream().map(AdUnitKeywordRequest.UnitKeyword::getUnitId)
                 .collect(Collectors.toList());
@@ -73,13 +79,16 @@ public class IAdUnitServiceImpl implements IAdUnitService {
             request.getUnitKeywords().forEach(i->adUnitKeywords.add(new AdUnitKeyword(i.getUnitId(),i.getKeyword())));
             adUnitKeywordDao.saveAll(adUnitKeywords);
         }
-        List<Long> all_id = Collections.emptyList();
+        List<Long> all_id = new ArrayList<>();
 
-        adUnitKeywords.forEach(i->all_id.add(i.getId()));
+        for(AdUnitKeyword adUnitKeyword : adUnitKeywords){
+            all_id.add(adUnitKeyword.getId());
+        }
         return new AdUnitKeywordResponse(all_id);
     }
 
     @Override
+    @Transactional
     public AdUnitItResponse createUnitIt(AdUnitItRequest request) throws AdException {
         List<Long> ids = request.getUnitIts().stream().map(AdUnitItRequest.UnitIt::getUnitId).collect(Collectors.toList());
         if(!isRelatedUnitExist(ids)){
@@ -93,12 +102,13 @@ public class IAdUnitServiceImpl implements IAdUnitService {
            )));
            adUnitItDao.saveAll(adUnitIts);
         }
-        List<Long> all_id = Collections.emptyList();
+        List<Long> all_id = new ArrayList<>();
         adUnitIts.forEach(i->all_id.add(i.getId()));
         return new AdUnitItResponse(all_id);
     }
 
     @Override
+    @Transactional
     public AdUnitDistrictResponse createUnitDistrict(AdUnitDistrictRequest request) throws AdException {
         List<Long> ids = request.getUnitDistricts().stream().map(AdUnitDistrictRequest.UnitDistrict::getUnitId).collect(Collectors.toList());
         if(!isRelatedUnitExist(ids)){
@@ -109,12 +119,13 @@ public class IAdUnitServiceImpl implements IAdUnitService {
                 new AdUnitDistrict(i.getUnitId(),i.getProvince(),i.getCity())
         ));
         adUnitDistrictDao.saveAll(adUnitDistricts);
-        List<Long> all_id = Collections.emptyList();
+        List<Long> all_id = new ArrayList<>();
         adUnitDistricts.forEach(i->all_id.add(i.getId()));
         return new AdUnitDistrictResponse(all_id);
     }
 
     @Override
+    @Transactional
     public CreativeUnitResponse createCreativeUnit(CreativeUnitRequest request) throws AdException {
         List<Long> unitIds = request.getUnitItems().stream().map(CreativeUnitRequest.CreativeUnitItem::getUnitId).collect(Collectors.toList());
         List<Long> createIds = request.getUnitItems().stream().map(CreativeUnitRequest.CreativeUnitItem::getCreativeId).collect(Collectors.toList());
@@ -147,7 +158,7 @@ public class IAdUnitServiceImpl implements IAdUnitService {
             return false;
         }
 
-        return creativeUnitDao.findAllByIds(creativeIds).size() ==
+        return adCreativeDao.findAllByIds(creativeIds).size() ==
                 new HashSet<>(creativeIds).size();
     }
 }

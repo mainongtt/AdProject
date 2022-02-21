@@ -1,6 +1,7 @@
 package com.jd.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.jd.exception.AdException;
 import com.jd.service.ICreativeService;
 import com.jd.vo.CreativeRequest;
 import com.jd.vo.CreativeResponse;
@@ -25,7 +26,7 @@ public class CreativeOPController {
     @PostMapping("/create/creative")
     public CreativeResponse createCreative(
             @RequestBody CreativeRequest request
-            ) {
+            ) throws AdException {
         log.info("ad-sponsor: createCreative -> {}",
                 JSON.toJSONString(request));
         return creativeService.createCreative(request);

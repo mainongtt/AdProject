@@ -33,9 +33,15 @@
         FROM
         <include refid="tableSql"></include>
         where
-           1 = 1
+        unit_status = 1
         <if test="id != null">
             and  id = #{id}
+        </if>
+        <if test="planId != null">
+            and  plan_id=#{planId}
+        </if>
+        <if test="unitName != null">
+            and  unit_name=#{unitName}
         </if>
 
     </select>
@@ -50,13 +56,14 @@
                  open="(" separator="," close=")">
         #{ids}
         </foreach>
+        and unit_status = 1
     </select>
 
     <update id="updateUnit"  parameterType="com.jd.entity.AdUnit">
         update
         <include refid="tableSql"></include>
         <include refid="updateSetSql"></include>
-        where 1 = 1
+        where unit_status = 1
         <if test="id != null">
             and  id = #{id}
         </if>

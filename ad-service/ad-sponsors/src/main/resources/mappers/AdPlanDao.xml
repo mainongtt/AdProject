@@ -33,10 +33,17 @@
         FROM
         <include refid="tableSql"></include>
         where
-           1 = 1
+        plan_status = 1
         <if test="id != null">
             and  id = #{id}
         </if>
+        <if test="userId != null">
+            and user_id=#{userId}
+        </if>
+        <if test="planName != null">
+            and plan_name=#{planName}
+        </if>
+
 
     </select>
     <update id="updatePlan"  parameterType="com.jd.entity.AdPlan">
@@ -44,7 +51,7 @@
         <include refid="tableSql"></include>
         <include refid="updateSetSql"></include>
         where
-        1 = 1
+        audit_status = 1
         <if test="id != null">
             and  id = #{id}
         </if>

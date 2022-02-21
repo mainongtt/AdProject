@@ -27,6 +27,12 @@
         <if test="id != null">
             and  id = #{id}
         </if>
+        <if test="unitId != null">
+            and  unit_id = #{unitId}
+        </if>
+        <if test="itTag != null">
+            and  it_tag = #{itTag}
+        </if>
 
     </select>
     <update id="updateUnitIt"  parameterType="com.jd.entity.unit_condition.AdUnitIt">
@@ -35,4 +41,18 @@
         <include refid="updateSetSql"></include>
         and id = #{id}
     </update>
+
+    <insert id="save" parameterType="com.jd.entity.unit_condition.AdUnitIt" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        <include refid="tableSql"></include>
+        (unit_id,it_tag) values (#{unitId},#{itTag})
+    </insert>
+    <insert id="saveAll" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        <include refid="tableSql"></include>
+        (unit_id,it_tag) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.unitId},#{item.itTag})
+        </foreach>
+    </insert>
 </mapper>
