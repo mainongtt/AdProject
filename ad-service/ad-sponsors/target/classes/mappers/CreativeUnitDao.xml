@@ -51,7 +51,7 @@
     <insert id="saveAll" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
         insert into
         <include refid="tableSql"></include>
-        (creative_id,unit_id) values 
+        (creative_id,unit_id) values
         <foreach collection="list" index="index" item="item" separator=",">
             (#{item.creativeId},#{item.unitId})
         </foreach>

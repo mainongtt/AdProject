@@ -53,7 +53,7 @@
         update
         <include refid="tableSql"></include>
         <include refid="updateSetSql"></include>
-        where 1 = 1
+        where audit_status = 1
         and id = #{id}
     </update>
     <insert id="save" parameterType="com.jd.entity.AdCreative">

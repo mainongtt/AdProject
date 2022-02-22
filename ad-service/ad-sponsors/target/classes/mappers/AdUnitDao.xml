@@ -63,7 +63,7 @@
         update
         <include refid="tableSql"></include>
         <include refid="updateSetSql"></include>
-        where unit_status = 1 = 1
+        where unit_status = 1
         <if test="id != null">
             and  id = #{id}
         </if>
