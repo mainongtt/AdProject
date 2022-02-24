@@ -81,6 +81,7 @@ public class MyConsumer {
             }
 
             try {
+                //线程会阻塞
                 consumer.commitSync();
             } catch (CommitFailedException ex) {
                 System.out.println("commit failed error: "
@@ -117,6 +118,7 @@ public class MyConsumer {
 
             // commit A, offset 2000
             // commit B, offset 3000
+            //重复消费，不会有重试
             consumer.commitAsync();
 
             if (!flag) {
@@ -148,6 +150,7 @@ public class MyConsumer {
             }
 
             consumer.commitAsync((map, e) -> {
+                // 回调函数
                 if (e != null) {
                     System.out.println("commit failed for offsets: " +
                     e.getMessage());
@@ -160,6 +163,7 @@ public class MyConsumer {
         }
     }
 
+    // 混合提交
     @SuppressWarnings("all")
     private static void mixSyncAndAsyncCommit() {
 

@@ -52,22 +52,22 @@ public class MyProducer {
     private static void sendMessageCallback() {
 
         ProducerRecord<String, String> record = new ProducerRecord<>(
-                "imooc-kafka-study-x", "name", "callback"
+                "imooc-kafka-study-x", "name", "callback1"
         );
         producer.send(record, new MyProducerCallback());
 
         record = new ProducerRecord<>(
-                "imooc-kafka-study-x", "name-x", "callback"
+                "imooc-kafka-study-x", "name-x", "callback2"
         );
         producer.send(record, new MyProducerCallback());
 
         record = new ProducerRecord<>(
-                "imooc-kafka-study-x", "name-y", "callback"
+                "imooc-kafka-study-x", "name-y", "callback3"
         );
         producer.send(record, new MyProducerCallback());
 
         record = new ProducerRecord<>(
-                "imooc-kafka-study-x", "name-z", "callback"
+                "imooc-kafka-study-x", "name-z", "callback4"
         );
         producer.send(record, new MyProducerCallback());
 
