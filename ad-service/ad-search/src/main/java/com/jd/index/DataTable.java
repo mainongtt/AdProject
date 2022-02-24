@@ -9,12 +9,16 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * 索引缓存工具类,来操作Spring容器以及其中的Bean实例。
+ */
 
 @Component
 public class DataTable implements ApplicationContextAware, PriorityOrdered {
 
     private static ApplicationContext applicationContext;
 
+    // class - > Object 索引对象
     public static final Map<Class, Object> dataTableMap =
             new ConcurrentHashMap<>();
 

@@ -1,6 +1,9 @@
 package com.jd.dump;
 
-
+/**
+ * 存储导出文件存储的目录和文件名称
+ * 具体进行导入文件，在ad-sponsor中的test 中
+ */
 public class DConstant {
 
     public static final String DATA_ROOT_DIR = "C:/Users/A/Desktop/Project/AdProject/data/";

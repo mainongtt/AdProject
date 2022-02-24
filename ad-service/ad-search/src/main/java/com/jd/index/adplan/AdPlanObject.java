@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-/**
- * Created by Qinyi.
- */
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

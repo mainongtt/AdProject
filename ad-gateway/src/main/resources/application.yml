@@ -8,12 +8,18 @@ spring:
           lower-case-service-id: true
           enabled: true
       routes:
-        - id: demo
+        - id: demo1
           uri: http://127.0.0.1:7000/ad-sponsor
           predicates:
             - Path=/ad-sponsor/**
           filters:
             - name: My
+        - id: demo2
+            uri: http://127.0.0.1:7001/ad-search
+            predicates:
+              - Path=/ad-search/**
+            filters:
+              - name: My
 server:
   port: 9090
 eureka:
