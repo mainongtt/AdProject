@@ -20,7 +20,7 @@ public class KafkaSender implements ISender {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    @Autowired
+    @Autowired(required = false)
     public KafkaSender(KafkaTemplate<String, String> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
@@ -32,7 +32,9 @@ public class KafkaSender implements ISender {
                 topic, JSON.toJSONString(rowData)
         );
     }
-
+    /**
+     * 测试消费kafka消息
+     */
     @KafkaListener(topics = {"ad-search-mysql-data"}, groupId = "ad-search")
     public void processMysqlRowData(ConsumerRecord<?, ?> record) {
 

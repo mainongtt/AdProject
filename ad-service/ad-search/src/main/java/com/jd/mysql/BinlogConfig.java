@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+/**
+ * BinlogConfig for 定义监听Binlog的配置信息,对应Binlog的配置文件
+ */
+
 @Component
 @ConfigurationProperties(prefix = "adconf.mysql")
 @Data

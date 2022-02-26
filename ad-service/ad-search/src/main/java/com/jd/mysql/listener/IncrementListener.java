@@ -13,16 +13,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * 增量数据实现监听
+ */
 @Slf4j
 @Component
 public class IncrementListener implements Ilistener {
 
-//    @Resource(name = "kafkaSender")
+    @Resource(name = "kafkaSender")
     private ISender sender;
 
     private final AggregationListener aggregationListener;

@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-
+/**
+ * BinlogClient 客户端，进行 Biglog 的监听
+ */
 @Slf4j
 @Component
 public class BinlogClient {

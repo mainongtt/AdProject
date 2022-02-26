@@ -7,22 +7,21 @@ spring:
   application:
     name: eureka-client-ad-search
   datasource:
-    url: jdbc:mysql://localhost:3306/ad_data?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&serverTimezone=Hongkong&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://127.0.0.1:3306/ad_data?autoReconnect=true
     username: root
     password: root
+    driver-class-name: com.mysql.jdbc.Driver
     tomcat:
       max-active: 4
       min-idle: 2
       initial-size: 2
-  kafka:
-    bootstrap-servers: 127.0.0.1:9092
-    listener:
-      concurrency: 4
+
 
 eureka:
   client:
     service-url:
       defaultZone: http://server1:8001/eureka/
+    enabled: false
 
 feign:
   hystrix:
@@ -33,6 +32,7 @@ management:
     web:
       exposure:
         include: "*"
+
 adconf:
   mysql:
     host: 127.0.0.1

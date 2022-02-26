@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-
+/**
+ * CommandLineRunner接口 的Component 会在所有的Spring Beans 都初始化之后，
+ */
 @Slf4j
 @Component
 public class BinlogRunner implements CommandLineRunner {

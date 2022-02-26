@@ -6,7 +6,7 @@ package com.jd.dump;
  */
 public class DConstant {
 
-    public static final String DATA_ROOT_DIR = "C:/Users/A/Desktop/Project/AdProject/data/";
+    public static final String DATA_ROOT_DIR = "F:/down/project/data/";
 
     // 各个表数据的存储文件名
     public static final String AD_PLAN = "ad_plan.data";
